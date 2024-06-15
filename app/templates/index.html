@@ -1,0 +1,11 @@
+<html lang="en">
+<head>
+    <title>Muda File Copy</title>
+</head>
+<body>
+<form id="form" action="{{ url_for('copy_file') }}" method="post" enctype="multipart/form-data">
+    <input id="input-file" type="file" name="file">
+    <input id="btn-copy" type="submit" value="Copy">
+</form>
+</body>
+<script src="{{ url_for('static', path='/js/index.js') }}"></script>
