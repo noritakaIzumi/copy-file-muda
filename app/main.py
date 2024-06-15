@@ -3,7 +3,7 @@ from io import BytesIO
 
 from fastapi import FastAPI, UploadFile
 from starlette.requests import Request
-from starlette.responses import StreamingResponse, HTMLResponse
+from starlette.responses import StreamingResponse, HTMLResponse, Response
 from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
 
@@ -15,12 +15,12 @@ templates = Jinja2Templates(directory=f"{current_dir}/templates")
 
 
 @app.get("/", response_class=HTMLResponse)
-def copy_file_form(request: Request):
+def copy_file_form(request: Request) -> Response:
     return templates.TemplateResponse(request, name="index.html", context={})
 
 
 @app.post("/copy_file/")
-async def copy_file(file: UploadFile):
+async def copy_file(file: UploadFile) -> Response:
     return StreamingResponse(
         content=BytesIO(await file.read(-1)),
         status_code=200,
