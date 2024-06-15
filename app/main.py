@@ -3,7 +3,7 @@ from io import BytesIO
 
 from fastapi import FastAPI, UploadFile
 from starlette.requests import Request
-from starlette.responses import StreamingResponse, HTMLResponse, Response
+from starlette.responses import StreamingResponse, HTMLResponse, Response, FileResponse
 from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
 
@@ -18,6 +18,9 @@ templates = Jinja2Templates(directory=f"{current_dir}/templates")
 def copy_file_form(request: Request) -> Response:
     return templates.TemplateResponse(request, name="index.html", context={})
 
+@app.get("/favicon.ico")
+def get_favicon():
+    return FileResponse(f"{current_dir}/static/images/confused.png")
 
 @app.post("/copy_file/")
 async def copy_file(file: UploadFile) -> Response:
